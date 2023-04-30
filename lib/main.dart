@@ -46,7 +46,8 @@ class _MyAppState extends State<MyApp> {
     'profile',
     'email',
     'offline_access',
-    'jkp-api'
+    'jkp-api',
+    'roles'
   ];
 
   final AuthorizationServiceConfiguration _serviceConfiguration =
@@ -73,40 +74,8 @@ class _MyAppState extends State<MyApp> {
                 ),
                 const SizedBox(height: 8),
                 ElevatedButton(
-                  child: const Text('Sign in with no code exchange'),
-                  onPressed: () => _signInWithNoCodeExchange(),
-                ),
-                ElevatedButton(
-                  child: const Text(
-                      'Sign in with no code exchange and generated nonce'),
-                  onPressed: () => _signInWithNoCodeExchangeAndGeneratedNonce(),
-                ),
-                const SizedBox(height: 8),
-                ElevatedButton(
-                  child: const Text('Exchange code'),
-                  onPressed: _authorizationCode != null ? _exchangeCode : null,
-                ),
-                const SizedBox(height: 8),
-                ElevatedButton(
                   child: const Text('Sign in with auto code exchange'),
                   onPressed: () => _signInWithAutoCodeExchange(),
-                ),
-                if (Platform.isIOS || Platform.isMacOS)
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ElevatedButton(
-                      child: const Text(
-                        'Sign in with auto code exchange using ephemeral '
-                        'session',
-                        textAlign: TextAlign.center,
-                      ),
-                      onPressed: () => _signInWithAutoCodeExchange(
-                          preferEphemeralSession: true),
-                    ),
-                  ),
-                ElevatedButton(
-                  child: const Text('Refresh token'),
-                  onPressed: _refreshToken != null ? _refresh : null,
                 ),
                 const SizedBox(height: 8),
                 ElevatedButton(
@@ -116,11 +85,6 @@ class _MyAppState extends State<MyApp> {
                           await _endSession();
                         }
                       : null,
-                ),
-                const SizedBox(height: 8),
-                const Text('authorization code'),
-                TextField(
-                  controller: _authorizationCodeTextController,
                 ),
                 const Text('access token'),
                 TextField(
@@ -363,7 +327,7 @@ class _MyAppState extends State<MyApp> {
 
   Future<void> _testApi(TokenResponse? response) async {
     final http.Response httpResponse = await http.get(
-        Uri.parse('https://demo.duendesoftware.com/api/test'),
+        Uri.parse('https://lightweight-median-pointer-listen.trycloudflare.com/api/v1/user/token'),
         headers: <String, String>{'Authorization': 'Bearer $_accessToken'});
     setState(() {
       _userInfo = httpResponse.statusCode == 200 ? httpResponse.body : '';
