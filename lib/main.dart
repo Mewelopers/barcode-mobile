@@ -23,37 +23,37 @@ class _MyAppState extends State<MyApp> {
   String? _idToken;
 
   final TextEditingController _authorizationCodeTextController =
-  TextEditingController();
+      TextEditingController();
   final TextEditingController _accessTokenTextController =
-  TextEditingController();
+      TextEditingController();
   final TextEditingController _accessTokenExpirationTextController =
-  TextEditingController();
+      TextEditingController();
 
   final TextEditingController _idTokenTextController = TextEditingController();
   final TextEditingController _refreshTokenTextController =
-  TextEditingController();
+      TextEditingController();
   String? _userInfo;
 
   // For a list of client IDs, go to https://demo.duendesoftware.com
-  final String _clientId = 'interactive.public';
-  final String _redirectUrl = 'com.duendesoftware.demo:/oauthredirect';
-  final String _issuer = 'https://demo.duendesoftware.com';
+  final String _clientId = 'jkp';
+  final String _redirectUrl = 'com.barcode-mobile:/oauthredirect';
+  final String _issuer = 'https://yermakovich.com/identity';
   final String _discoveryUrl =
-      'https://demo.duendesoftware.com/.well-known/openid-configuration';
-  final String _postLogoutRedirectUrl = 'com.duendesoftware.demo:/';
+      'https://yermakovich.com/identity/.well-known/openid-configuration';
+  final String _postLogoutRedirectUrl = 'com.barcode-mobile:/';
   final List<String> _scopes = <String>[
     'openid',
     'profile',
     'email',
     'offline_access',
-    'api'
+    'jkp-api'
   ];
 
   final AuthorizationServiceConfiguration _serviceConfiguration =
-  const AuthorizationServiceConfiguration(
-    authorizationEndpoint: 'https://demo.duendesoftware.com/connect/authorize',
-    tokenEndpoint: 'https://demo.duendesoftware.com/connect/token',
-    endSessionEndpoint: 'https://demo.duendesoftware.com/connect/endsession',
+      const AuthorizationServiceConfiguration(
+    authorizationEndpoint: 'https://yermakovich.com/identity/connect/authorize',
+    tokenEndpoint: 'https://yermakovich.com/identity/connect/token',
+    endSessionEndpoint: 'https://yermakovich.com/identity/connect/endsession',
   );
 
   @override
@@ -97,7 +97,7 @@ class _MyAppState extends State<MyApp> {
                     child: ElevatedButton(
                       child: const Text(
                         'Sign in with auto code exchange using ephemeral '
-                            'session',
+                        'session',
                         textAlign: TextAlign.center,
                       ),
                       onPressed: () => _signInWithAutoCodeExchange(
@@ -113,8 +113,8 @@ class _MyAppState extends State<MyApp> {
                   child: const Text('End session'),
                   onPressed: _idToken != null
                       ? () async {
-                    await _endSession();
-                  }
+                          await _endSession();
+                        }
                       : null,
                 ),
                 const SizedBox(height: 8),
@@ -151,11 +151,11 @@ class _MyAppState extends State<MyApp> {
   Future<void> _endSession() async {
     try {
       _setBusyState();
+      _clearSessionInfo();
       await _appAuth.endSession(EndSessionRequest(
           idTokenHint: _idToken,
           postLogoutRedirectUrl: _postLogoutRedirectUrl,
           serviceConfiguration: _serviceConfiguration));
-      _clearSessionInfo();
     } catch (_) {}
     _clearBusyState();
   }
@@ -251,7 +251,7 @@ class _MyAppState extends State<MyApp> {
       _setBusyState();
       final Random random = Random.secure();
       final String nonce =
-      base64Url.encode(List<int>.generate(16, (_) => random.nextInt(256)));
+          base64Url.encode(List<int>.generate(16, (_) => random.nextInt(256)));
       // use the discovery endpoint to find the configuration
       final AuthorizationResponse? result = await _appAuth.authorize(
         AuthorizationRequest(_clientId, _redirectUrl,
@@ -279,7 +279,7 @@ class _MyAppState extends State<MyApp> {
         getting from the details from the discovery document.
       */
       final AuthorizationTokenResponse? result =
-      await _appAuth.authorizeAndExchangeCode(
+          await _appAuth.authorizeAndExchangeCode(
         AuthorizationTokenRequest(
           _clientId,
           _redirectUrl,
