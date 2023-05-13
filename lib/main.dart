@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_appauth/flutter_appauth.dart';
 import 'package:http/http.dart' as http;
+import 'package:barcode_mobile/bottomBar/'
 
 void main() => runApp(MyApp());
 
@@ -57,6 +58,8 @@ class _MyAppState extends State<MyApp> {
     endSessionEndpoint: 'https://yermakovich.com/identity/connect/endsession',
   );
 
+  int _currentIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -108,8 +111,32 @@ class _MyAppState extends State<MyApp> {
             ),
           ),
         ),
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: _currentIndex,
+          onTap: onTabTapped,
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.add),
+              label: "dodaj produkt"
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.search),
+              label: "wyszukaj produkt",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.image_search),
+              label: "skanuj kod kreskowy",
+            ),
+          ],
+        ),
       ),
     );
+  }
+
+  void onTabTapped(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
   }
 
   Future<void> _endSession() async {
