@@ -62,11 +62,22 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Plugin example app'),
+        home: Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: const Color.fromARGB(255, 76, 79, 146),
+        title: const Text('JKP',
+            style: TextStyle(color: Color.fromARGB(255, 135, 223, 154))),
+      ),
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/background.png'),
+            fit: BoxFit.cover,
+          ),
         ),
-        body: SafeArea(
+        constraints: const BoxConstraints.expand(),
+        child: SafeArea(
           child: SingleChildScrollView(
             child: Column(
               children: <Widget>[
@@ -110,26 +121,26 @@ class _MyAppState extends State<MyApp> {
             ),
           ),
         ),
-        bottomNavigationBar: BottomNavigationBar(
-          currentIndex: _currentIndex,
-          onTap: onTabTapped,
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.add),
-              label: "dodaj produkt"
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.search),
-              label: "wyszukaj produkt",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.image_search),
-              label: "skanuj kod kreskowy",
-            ),
-          ],
-        ),
       ),
-    );
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentIndex,
+        onTap: onTabTapped,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.add),
+            label: "dodaj produkt",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+            label: "wyszukaj produkt",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.image_search),
+            label: "skanuj kod kreskowy",
+          ),
+        ],
+      ),
+    ));
   }
 
   void onTabTapped(int index) {
@@ -353,7 +364,8 @@ class _MyAppState extends State<MyApp> {
 
   Future<void> _testApi(TokenResponse? response) async {
     final http.Response httpResponse = await http.get(
-        Uri.parse('https://lightweight-median-pointer-listen.trycloudflare.com/api/v1/user/token'),
+        Uri.parse(
+            'https://lightweight-median-pointer-listen.trycloudflare.com/api/v1/user/token'),
         headers: <String, String>{'Authorization': 'Bearer $_accessToken'});
     setState(() {
       _userInfo = httpResponse.statusCode == 200 ? httpResponse.body : '';
