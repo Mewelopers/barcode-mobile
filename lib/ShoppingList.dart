@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class ShoppingList extends StatelessWidget {
-
   const ShoppingList({super.key});
 
   @override
@@ -45,6 +44,22 @@ class ShoppingList extends StatelessWidget {
               ),
             ),
           ),
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.add),
+              label: "dodaj produkt",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.search),
+              label: "wyszukaj produkt",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.image_search),
+              label: "skanuj kod kreskowy",
+            ),
+          ],
         ),
       ),
     );
