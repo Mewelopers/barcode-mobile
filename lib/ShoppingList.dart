@@ -13,6 +13,10 @@ class ShoppingList extends StatelessWidget {
           backgroundColor: const Color.fromARGB(255, 76, 79, 146),
           title: const Text('JKP',
               style: TextStyle(color: Color.fromARGB(255, 135, 223, 154))),
+          leading: IconButton(
+            icon: Icon(Icons.arrow_circle_left_outlined),
+            onPressed: () {},
+          ),
         ),
         body: Container(
           decoration: const BoxDecoration(
