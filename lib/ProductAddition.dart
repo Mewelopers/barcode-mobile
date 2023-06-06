@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'ShoppingList.dart';
+import 'ShoppingList/ShoppingListPanel.dart';
 
 class ProductAddition extends StatelessWidget {
   const ProductAddition({super.key});
@@ -16,7 +16,7 @@ class ProductAddition extends StatelessWidget {
               size: 40,
               color: Color.fromARGB(255, 135, 223, 154),
             ),
-            onPressed: () => {runApp(const ShoppingList())},
+            onPressed: () => {runApp(const ShoppingListPanel())},
           ),
         ),
         body: Container(
