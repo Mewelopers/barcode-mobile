@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'MyCheckbox.dart';
 
 class ShoppingList extends StatelessWidget {
   const ShoppingList({super.key});
@@ -8,12 +9,11 @@ class ShoppingList extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          elevation: 0,
           backgroundColor: const Color.fromARGB(255, 76, 79, 146),
           title: const Text('JKP',
               style: TextStyle(color: Color.fromARGB(255, 135, 223, 154))),
           leading: IconButton(
-            icon: Icon(Icons.arrow_circle_left_outlined),
+            icon: const Icon(Icons.arrow_circle_left_outlined),
             onPressed: () {},
           ),
         ),
@@ -24,25 +24,60 @@ class ShoppingList extends StatelessWidget {
               fit: BoxFit.cover,
             ),
           ),
-          constraints: const BoxConstraints.expand(),
-          child: Center(
-            child: Container(
-              width: 200,
-              height: 75,
-              decoration: BoxDecoration(
-                color: Colors.green,
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: const Center(
-                child: Text(
-                  'Zakupy spożywcze',
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.black,
+          child: Column(
+            children: [
+              Container(
+                margin: const EdgeInsets.only(
+                  left: 60,
+                  right: 60,
+                  top: 20
+                ),
+                height: 75,
+                decoration: BoxDecoration(
+                  color: Colors.green,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: const Center(
+                  child: Text(
+                    'Zakupy spożywcze',
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.black,
+                    ),
                   ),
                 ),
               ),
-            ),
+              Container(
+                margin: const EdgeInsets.only(
+                    left: 70,
+                    right: 70,
+                    top: 20
+                ),
+                height: 50,
+                decoration: BoxDecoration(
+                  color: Colors.green,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Row(
+                  children: [
+                    const MyCheckbox(),
+                    const Text('ProductName',
+                      style: TextStyle(
+                        fontSize: 16
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () {},
+                      icon: const Icon(Icons.remove_red_eye_outlined)
+                    ),
+                    IconButton(
+                        onPressed: () {},
+                        icon: const Icon(Icons.delete)
+                    )
+                  ],
+                ),
+              ),
+            ]
           ),
         ),
         bottomNavigationBar: BottomNavigationBar(
