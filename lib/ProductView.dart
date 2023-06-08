@@ -1,28 +1,26 @@
+import 'package:barcode_mobile/common/Background.dart';
+import 'package:barcode_mobile/shoppingList/ProductList.dart';
 import 'package:flutter/material.dart';
+import 'common/TopBar.dart';
 
 class ProductView extends StatelessWidget {
+  const ProductView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: _ProductView(),
+    );
+  }
+}
+
+class _ProductView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: const Color.fromARGB(255, 76, 79, 146),
-        title: const Text(
-          'JKP',
-          style: TextStyle(color: Color.fromARGB(255, 135, 223, 154)),
-        ),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_circle_left_outlined),
-          onPressed: () {},
-        ),
-      ),
+      appBar: TopBar(backButtonDestination: ProductList()),
       body: Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/images/background.png'),
-            fit: BoxFit.cover,
-          ),
-        ),
+        decoration: background,
         child: Center(
           child: Container(
             margin: const EdgeInsets.all(20),
