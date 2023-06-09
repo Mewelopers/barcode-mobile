@@ -11,7 +11,8 @@ class ListNameBox extends StatelessWidget {
       margin: const EdgeInsets.only(
           left: 60,
           right: 60,
-          top: 30
+          top: 30,
+          bottom: 10
       ),
       height: 75,
       decoration: BoxDecoration(

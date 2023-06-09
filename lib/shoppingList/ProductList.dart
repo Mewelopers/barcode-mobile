@@ -9,11 +9,24 @@ class ProductList extends StatelessWidget {
     ProductTile(productName: 'AAAA'),
     ProductTile(productName: 'BBBB'),
     ProductTileWithInfo(productName: 'CCCC'),
-    ProductTileWithInfo(productName: 'DDDD')
+    ProductTileWithInfo(productName: 'DDDD'),
+    ProductTile(productName: 'BBBB'),
+    ProductTile(productName: 'BBBB'),
+    ProductTile(productName: 'BBBB'),
+    ProductTile(productName: 'BBBB'),
+    ProductTile(productName: 'BBBB'),
+    ProductTile(productName: 'BBBB'),
+    ProductTile(productName: 'BBBB'),
+    ProductTile(productName: 'BBBB')
   ];
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: products);
+    return Expanded(
+        child: ListView(
+            shrinkWrap: true,
+            children: products
+        )
+    );
   }
 }
