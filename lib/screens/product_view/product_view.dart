@@ -1,24 +1,19 @@
-import 'package:barcode_mobile/common/Background.dart';
-import 'package:barcode_mobile/shoppingList/ProductList.dart';
+import 'package:barcode_mobile/common/nav_bar.dart';
+import 'package:barcode_mobile/extensions/string_extensions.dart';
 import 'package:flutter/material.dart';
-import 'common/TopBar.dart';
+
+import '../../common/background.dart';
+import '../../models/shopping_list_item.dart';
 
 class ProductView extends StatelessWidget {
-  const ProductView({super.key});
+  final ShoppingListItem _listItem;
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: _ProductView(),
-    );
-  }
-}
+  const ProductView({super.key, required ShoppingListItem listItem}) : _listItem = listItem;
 
-class _ProductView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: TopBar(backButtonDestination: ProductList()),
+      appBar: NavBar(title: _listItem.name.capitalize()),
       body: Container(
         decoration: background,
         child: Center(
