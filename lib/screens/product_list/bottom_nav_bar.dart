@@ -5,7 +5,9 @@ import '../../common/jkp_colors.dart';
 import '../product_addition/product_addition.dart';
 
 class BottomNavBar extends StatefulWidget {
-  const BottomNavBar({super.key});
+  final Function _addListItem;
+
+  const BottomNavBar({super.key, required Function addListItem}) : _addListItem = addListItem;
 
   @override
   NavBarState createState() => NavBarState();
@@ -52,6 +54,8 @@ class NavBarState extends State<BottomNavBar> {
                   MaterialPageRoute(
                     builder: (context) => const SimpleBarcodeScannerPage(),
                   ));
+
+              widget._addListItem(res);
 
               break;
             }

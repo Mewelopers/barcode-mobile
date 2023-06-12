@@ -60,6 +60,60 @@ class ProductListState extends State<ProductList> {
     setState(() => _isLoading = false);
   }
 
+  Future<void> addListItem(String name, String? barcode) async {
+    setState(() => _isLoading = true);
+    await _productListService.createProductListItem(_shoppingList.id, name, barcode);
+    await getItems();
+    setState(() => _isLoading = false);
+  }
+
+  void showAddListItemPopup(String barcode) {
+    String name = "";
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Nazwa produktu'),
+          backgroundColor: clrAccent200,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+          content: TextField(
+              onChanged: (value) {
+                name = value;
+              },
+              textAlign: TextAlign.center),
+          contentPadding: const EdgeInsets.only(top: 16, left: 16, right: 16),
+          actionsPadding: const EdgeInsets.only(top: 8, bottom: 8, left: 24, right: 24),
+          actions: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                      backgroundColor: clrNeutral300),
+                  child: const Text('Anuluj', style: TextStyle(color: clrNeutral900)),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                      backgroundColor: clrNeutral300),
+                  child: const Text('Zapisz', style: TextStyle(color: clrNeutral900)),
+                  onPressed: () {
+                    addListItem(name, barcode);
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -92,7 +146,7 @@ class ProductListState extends State<ProductList> {
                     ),
         ),
       ),
-      bottomNavigationBar: const BottomNavBar(),
+      bottomNavigationBar: BottomNavBar(addListItem: showAddListItemPopup),
     );
   }
 }

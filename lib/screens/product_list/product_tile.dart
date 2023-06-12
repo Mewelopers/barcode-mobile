@@ -84,7 +84,7 @@ class ProductTile extends StatelessWidget {
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('Nowa nazwa produktu'),
-          backgroundColor: const Color.fromARGB(255, 244, 207, 113),
+          backgroundColor: clrAccent200,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
           content: TextField(
               decoration: InputDecoration(hintText: _listItem.name),
@@ -101,8 +101,8 @@ class ProductTile extends StatelessWidget {
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-                      backgroundColor: const Color.fromARGB(255, 135, 223, 154)),
-                  child: const Text('Anuluj', style: TextStyle(color: Colors.black)),
+                      backgroundColor: clrNeutral300),
+                  child: const Text('Anuluj', style: TextStyle(color: clrNeutral900)),
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
@@ -110,11 +110,8 @@ class ProductTile extends StatelessWidget {
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-                      backgroundColor: const Color.fromARGB(255, 135, 223, 154)),
-                  child: const Text('Zatwierdź',
-                      style: TextStyle(
-                        color: Colors.black,
-                      )),
+                      backgroundColor: clrNeutral300),
+                  child: const Text('Zatwierdź', style: TextStyle(color: clrNeutral900)),
                   onPressed: () {
                     _editListItem(_listItem.id, newListName, _listItem.productBarcode);
                     Navigator.of(context).pop();
@@ -130,64 +127,69 @@ class ProductTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(top: 4, bottom: 4),
-      decoration: BoxDecoration(
-        color: clrNeutral300,
-        borderRadius: BorderRadius.circular(30),
-      ),
-      child: InkWell(
-          child: Container(
-            padding: const EdgeInsets.only(left: 18),
-            decoration: BoxDecoration(
-              color: clrNeutral300,
-              borderRadius: BorderRadius.circular(30),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  _listItem.name.capitalize(),
-                  style: const TextStyle(color: clrNeutral900, fontSize: 16, fontWeight: FontWeight.bold),
-                ),
-                Container(
-                  decoration:
-                      const BoxDecoration(color: clrAccent300, borderRadius: BorderRadius.all(Radius.circular(30))),
-                  child: Row(
-                    children: [
-                      Container(
-                        decoration: const BoxDecoration(
-                            color: clrAccent500, borderRadius: BorderRadius.all(Radius.circular(30))),
-                        child: IconButton(
-                          padding: const EdgeInsets.all(16),
-                          icon: const Icon(Icons.edit),
+    return InkWell(
+        child: Container(
+          margin: const EdgeInsets.only(top: 4, bottom: 4),
+          padding: const EdgeInsets.only(left: 18),
+          decoration: BoxDecoration(
+            color: clrNeutral300,
+            borderRadius: BorderRadius.circular(30),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                _listItem.name.capitalize(),
+                style: const TextStyle(color: clrNeutral900, fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+              Wrap(
+                crossAxisAlignment: WrapCrossAlignment.center,
+                spacing: 8,
+                children: [
+                  if (_listItem.productBarcode != null) const Icon(Icons.remove_red_eye_outlined, color: clrNeutral900),
+                  Container(
+                    decoration:
+                        const BoxDecoration(color: clrAccent300, borderRadius: BorderRadius.all(Radius.circular(30))),
+                    child: Row(
+                      children: [
+                        Container(
+                          decoration: const BoxDecoration(
+                              color: clrAccent500, borderRadius: BorderRadius.all(Radius.circular(30))),
+                          child: IconButton(
+                            padding: const EdgeInsets.all(16),
+                            icon: const Icon(Icons.edit),
+                            onPressed: () {
+                              showEditPopup(context);
+                            },
+                            color: clrNeutral900,
+                          ),
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.delete),
                           onPressed: () {
-                            showEditPopup(context);
+                            showDeletePopup(context);
                           },
                           color: clrNeutral900,
                         ),
-                      ),
-                      IconButton(
-                        icon: const Icon(Icons.delete),
-                        onPressed: () {
-                          showDeletePopup(context);
-                        },
-                        color: clrNeutral900,
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ),
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => ProductView(listItem: _listItem),
+                      ],
+                    ),
+                  )
+                ],
               ),
-            );
-          }),
-    );
+            ],
+          ),
+        ),
+        onTap: () {
+          if (_listItem.productBarcode == null) {
+            return;
+          }
+
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ProductView(listItem: _listItem),
+            ),
+          );
+        });
   }
 }
