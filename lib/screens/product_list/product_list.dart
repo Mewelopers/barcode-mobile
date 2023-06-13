@@ -67,7 +67,7 @@ class ProductListState extends State<ProductList> {
     setState(() => _isLoading = false);
   }
 
-  void showAddListItemPopup(String barcode) {
+  void showAddListItemPopup(String? barcode) {
     String name = "";
     showDialog(
       context: context,
@@ -128,10 +128,10 @@ class ProductListState extends State<ProductList> {
           child: _isLoading
               ? const Center(child: CircularProgressIndicator())
               : _items.isEmpty
-                  ? Center(
+                  ? const Center(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
+                        children: [
                           Icon(Icons.access_time_sharp, size: 64),
                           Text('No items found'),
                         ],

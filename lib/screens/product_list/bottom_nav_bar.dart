@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:simple_barcode_scanner/simple_barcode_scanner.dart';
 
 import '../../common/jkp_colors.dart';
-import '../product_addition/product_addition.dart';
 
 class BottomNavBar extends StatefulWidget {
   final Function _addListItem;
@@ -40,11 +39,7 @@ class NavBarState extends State<BottomNavBar> {
         switch (option) {
           case 0:
             {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const ProductAddition(),
-                  ));
+              widget._addListItem(null);
               break;
             }
           case 2:
