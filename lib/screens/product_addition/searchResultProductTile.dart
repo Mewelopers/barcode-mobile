@@ -12,7 +12,11 @@ class SearchResultProductTile extends StatelessWidget{
   @override
   Widget build(BuildContext context){
     return Padding(
-      padding: const EdgeInsets.all(25),
+      padding: const EdgeInsets.only(
+        left: 25,
+        right: 25,
+        bottom: 10
+      ),
       child: Container(
           height: 250,
           decoration: BoxDecoration(
