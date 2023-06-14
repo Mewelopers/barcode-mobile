@@ -12,13 +12,12 @@ class BottomNavBar extends StatefulWidget {
   final int index;
   final ShoppingList shoppingList;
 
-  const BottomNavBar({
-    super.key,
-    required this.addProductFromList,
-    required this.addNewProduct,
-    required this.index,
-    required this.shoppingList
-  });
+  const BottomNavBar(
+      {super.key,
+      required this.addProductFromList,
+      required this.addNewProduct,
+      required this.index,
+      required this.shoppingList});
 
   @override
   NavBarState createState() => NavBarState();
@@ -50,39 +49,48 @@ class NavBarState extends State<BottomNavBar> {
       onTap: (int option) async {
         if (option != widget.index) {
           switch (option) {
-            case 0: {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => ProductAddition(
-                          shoppingList: widget.shoppingList,
-                          addNewProduct: widget.addNewProduct,
-                          addProductFromList: widget.addProductFromList
-                      )
-                  )
-              );
-              break;
-            }
-            case 1: {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => ProductList(shoppingList: widget.shoppingList)
-                  )
-              );
-              break;
-            }
-            case 2: {
-              var res = await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const SimpleBarcodeScannerPage(),
-                  ));
+            case 0:
+              {
+                Navigator.push(
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation1, animation2) =>
+                          ProductAddition(
+                              shoppingList: widget.shoppingList,
+                              addNewProduct: widget.addNewProduct,
+                              addProductFromList: widget.addProductFromList),
+                      transitionDuration: Duration.zero,
+                      reverseTransitionDuration: Duration.zero,
+                    ));
 
-              widget.addNewProduct(res);
+                break;
+              }
+            case 1:
+              {
+                Navigator.push(
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation1, animation2) =>
+                          ProductList(shoppingList: widget.shoppingList),
+                      transitionDuration: Duration.zero,
+                      reverseTransitionDuration: Duration.zero,
+                    ));
+                break;
+              }
+            case 2:
+              {
+                var res = await Navigator.push(
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation1, animation2) =>
+                          const SimpleBarcodeScannerPage(),
+                      transitionDuration: Duration.zero,
+                      reverseTransitionDuration: Duration.zero,
+                    ));
+                if (res && res != "-1") widget.addNewProduct(res);
 
-              break;
-            }
+                break;
+              }
           }
         }
       },

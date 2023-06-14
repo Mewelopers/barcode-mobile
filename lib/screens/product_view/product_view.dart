@@ -10,12 +10,13 @@ import '../../models/shopping_list_item.dart';
 class ProductView extends StatelessWidget {
   final ShoppingListItem _listItem;
 
-  const ProductView({super.key, required ShoppingListItem listItem}) : _listItem = listItem;
+  const ProductView({super.key, required ShoppingListItem listItem})
+      : _listItem = listItem;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: NavBar(title: _listItem.name.capitalize(), parrent: context.widget),
+      appBar: NavBar(title: _listItem.name.capitalize()),
       body: Container(
         width: double.infinity,
         decoration: background,
@@ -42,11 +43,11 @@ class ProductView extends StatelessWidget {
                   // Transform.rotate(
                   //   angle: 3.14 / 2, // 90 degrees in radians
                   //   child:
-                    SvgPicture.network(
-                      apiUrl + _listItem.barcodeImageUrl!,
-                      width: MediaQuery.of(context).size.width * 0.5,
-                      fit: BoxFit.cover,
-                    ),
+                  SvgPicture.network(
+                    apiUrl + _listItem.barcodeImageUrl!,
+                    width: MediaQuery.of(context).size.width * 0.5,
+                    fit: BoxFit.cover,
+                  ),
                   // ),
                 ],
               ),
