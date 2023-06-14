@@ -10,7 +10,10 @@ class ProductTile extends StatelessWidget {
   final Function _editListItem;
 
   const ProductTile(
-      {super.key, required ShoppingListItem listItem, required Function editListItem, required Function deleteListItem})
+      {super.key,
+      required ShoppingListItem listItem,
+      required Function editListItem,
+      required Function deleteListItem})
       : _editListItem = editListItem,
         _deleteListItem = deleteListItem,
         _listItem = listItem;
@@ -29,7 +32,10 @@ class ProductTile extends StatelessWidget {
         ),
         children: <TextSpan>[
           const TextSpan(text: 'Czy na pewno chcesz usunąć ten produkt:\n'),
-          TextSpan(text: _listItem.name, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20, height: 2)),
+          TextSpan(
+              text: _listItem.name,
+              style: const TextStyle(
+                  fontWeight: FontWeight.bold, fontSize: 20, height: 2)),
         ],
       ),
     );
@@ -39,26 +45,31 @@ class ProductTile extends StatelessWidget {
       builder: (BuildContext context) {
         return AlertDialog(
           backgroundColor: clrAccent200,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
           content: message,
           contentPadding: const EdgeInsets.only(top: 16, left: 16, right: 16),
-          actionsPadding: const EdgeInsets.only(top: 8, bottom: 8, left: 24, right: 24),
+          actionsPadding:
+              const EdgeInsets.only(top: 8, bottom: 8, left: 24, right: 24),
           actions: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30)),
                       backgroundColor: clrNeutral300),
-                  child: const Text('Nie', style: TextStyle(color: Colors.black)),
+                  child:
+                      const Text('Nie', style: TextStyle(color: Colors.black)),
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
                 ),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30)),
                       backgroundColor: clrNeutral300),
                   child: const Text('Tak',
                       style: TextStyle(
@@ -85,7 +96,8 @@ class ProductTile extends StatelessWidget {
         return AlertDialog(
           title: const Text('Nowa nazwa produktu'),
           backgroundColor: clrAccent200,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
           content: TextField(
               decoration: InputDecoration(hintText: _listItem.name),
               onChanged: (value) {
@@ -93,27 +105,33 @@ class ProductTile extends StatelessWidget {
               },
               textAlign: TextAlign.center),
           contentPadding: const EdgeInsets.only(top: 16, left: 16, right: 16),
-          actionsPadding: const EdgeInsets.only(top: 8, bottom: 8, left: 24, right: 24),
+          actionsPadding:
+              const EdgeInsets.only(top: 8, bottom: 8, left: 24, right: 24),
           actions: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30)),
                       backgroundColor: clrNeutral300),
-                  child: const Text('Anuluj', style: TextStyle(color: clrNeutral900)),
+                  child: const Text('Anuluj',
+                      style: TextStyle(color: clrNeutral900)),
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
                 ),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30)),
                       backgroundColor: clrNeutral300),
-                  child: const Text('Zatwierdź', style: TextStyle(color: clrNeutral900)),
+                  child: const Text('Zatwierdź',
+                      style: TextStyle(color: clrNeutral900)),
                   onPressed: () {
-                    _editListItem(_listItem.id, newListName, _listItem.productBarcode);
+                    _editListItem(
+                        _listItem.id, newListName, _listItem.productBarcode);
                     Navigator.of(context).pop();
                   },
                 ),
@@ -138,26 +156,33 @@ class ProductTile extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              SizedBox(
-                width: 230,
-                child: Text(
-                  _listItem.name.capitalize(),
-                  style: const TextStyle(color: clrNeutral900, fontSize: 16, fontWeight: FontWeight.bold),
-                )
-              ),
+              Expanded(
+                  child: Text(
+                _listItem.name.capitalize(),
+                style: const TextStyle(
+                    color: clrNeutral900,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold),
+                overflow: TextOverflow.ellipsis,
+              )),
               Wrap(
                 crossAxisAlignment: WrapCrossAlignment.center,
                 spacing: 8,
                 children: [
-                  if (_listItem.productBarcode != null) const Icon(Icons.remove_red_eye_outlined, color: clrNeutral900),
+                  if (_listItem.productBarcode != null)
+                    const Icon(Icons.remove_red_eye_outlined,
+                        color: clrNeutral900),
                   Container(
-                    decoration:
-                        const BoxDecoration(color: clrAccent300, borderRadius: BorderRadius.all(Radius.circular(30))),
+                    decoration: const BoxDecoration(
+                        color: clrAccent300,
+                        borderRadius: BorderRadius.all(Radius.circular(30))),
                     child: Row(
                       children: [
                         Container(
                           decoration: const BoxDecoration(
-                              color: clrAccent500, borderRadius: BorderRadius.all(Radius.circular(30))),
+                              color: clrAccent500,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(30))),
                           child: IconButton(
                             padding: const EdgeInsets.all(16),
                             icon: const Icon(Icons.edit),

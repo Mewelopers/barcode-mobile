@@ -40,7 +40,8 @@ class ListOfListsState extends State<ListOfLists> {
   }
 
   void handleListAdd(String listTitle) async {
-    ShoppingList newShoppingList = await _listOfListsService.createList(listTitle);
+    ShoppingList newShoppingList =
+        await _listOfListsService.createList(listTitle);
     List<ShoppingList> shoppingLists = await _futureShoppingLists;
     shoppingLists.add(newShoppingList);
     setState(() {
@@ -51,7 +52,8 @@ class ListOfListsState extends State<ListOfLists> {
   void handleListEdit(String listTitle, int id) async {
     List<ShoppingList> shoppingLists = await _futureShoppingLists;
     int editedListIndex = shoppingLists.indexWhere((list) => list.id == id);
-    ShoppingList newShoppingList = await _listOfListsService.editList(listTitle, id);
+    ShoppingList newShoppingList =
+        await _listOfListsService.editList(listTitle, id);
     shoppingLists[editedListIndex] = newShoppingList;
     setState(() {
       _futureShoppingLists = Future.value(shoppingLists);
@@ -66,7 +68,8 @@ class ListOfListsState extends State<ListOfLists> {
         return AlertDialog(
           title: const Text('Edycja nazwy listy'),
           backgroundColor: const Color.fromARGB(255, 244, 207, 113),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
           content: TextField(
               decoration: InputDecoration(hintText: previousName),
               onChanged: (value) {
@@ -74,24 +77,30 @@ class ListOfListsState extends State<ListOfLists> {
               },
               textAlign: TextAlign.center),
           contentPadding: const EdgeInsets.only(top: 16, left: 16, right: 16),
-          actionsPadding: const EdgeInsets.only(top: 8, bottom: 8, left: 24, right: 24),
+          actionsPadding:
+              const EdgeInsets.only(top: 8, bottom: 8, left: 24, right: 24),
           actions: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-                      backgroundColor: const Color.fromARGB(255, 135, 223, 154)),
-                  child: const Text('Anuluj', style: TextStyle(color: Colors.black)),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30)),
+                      backgroundColor:
+                          const Color.fromARGB(255, 135, 223, 154)),
+                  child: const Text('Anuluj',
+                      style: TextStyle(color: Colors.black)),
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
                 ),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-                      backgroundColor: const Color.fromARGB(255, 135, 223, 154)),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30)),
+                      backgroundColor:
+                          const Color.fromARGB(255, 135, 223, 154)),
                   child: const Text('Zatwierdź',
                       style: TextStyle(
                         color: Colors.black,
@@ -122,7 +131,10 @@ class ListOfListsState extends State<ListOfLists> {
         ),
         children: <TextSpan>[
           const TextSpan(text: 'Czy na pewno chcesz usunąć listę zakupów:\n'),
-          TextSpan(text: name, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20, height: 2)),
+          TextSpan(
+              text: name,
+              style: const TextStyle(
+                  fontWeight: FontWeight.bold, fontSize: 20, height: 2)),
         ],
       ),
     );
@@ -132,26 +144,31 @@ class ListOfListsState extends State<ListOfLists> {
       builder: (BuildContext context) {
         return AlertDialog(
           backgroundColor: clrAccent200,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
           content: message,
           contentPadding: const EdgeInsets.only(top: 16, left: 16, right: 16),
-          actionsPadding: const EdgeInsets.only(top: 8, bottom: 8, left: 24, right: 24),
+          actionsPadding:
+              const EdgeInsets.only(top: 8, bottom: 8, left: 24, right: 24),
           actions: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30)),
                       backgroundColor: clrNeutral300),
-                  child: const Text('Nie', style: TextStyle(color: Colors.black)),
+                  child:
+                      const Text('Nie', style: TextStyle(color: Colors.black)),
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
                 ),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30)),
                       backgroundColor: clrNeutral300),
                   child: const Text('Tak',
                       style: TextStyle(
@@ -178,30 +195,35 @@ class ListOfListsState extends State<ListOfLists> {
         return AlertDialog(
           title: const Text('Dodawanie nowej listy'),
           backgroundColor: clrAccent200,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
           content: TextField(
               onChanged: (value) {
                 newListName = value;
               },
               textAlign: TextAlign.center),
           contentPadding: const EdgeInsets.only(top: 16, left: 16, right: 16),
-          actionsPadding: const EdgeInsets.only(top: 8, bottom: 8, left: 24, right: 24),
+          actionsPadding:
+              const EdgeInsets.only(top: 8, bottom: 8, left: 24, right: 24),
           actions: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30)),
                       backgroundColor: clrNeutral300),
-                  child: const Text('Anuluj', style: TextStyle(color: clrNeutral900)),
+                  child: const Text('Anuluj',
+                      style: TextStyle(color: clrNeutral900)),
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
                 ),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30)),
                       backgroundColor: clrNeutral300),
                   child: const Text('Dodaj listę',
                       style: TextStyle(
@@ -226,7 +248,7 @@ class ListOfListsState extends State<ListOfLists> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: NavBar(title: 'Twoje listy', showBackButton: false, parrent: context.widget),
+      appBar: NavBar(title: 'Twoje listy', showBackButton: false),
       body: Container(
         padding: const EdgeInsets.only(top: 16),
         decoration: background,
@@ -234,7 +256,8 @@ class ListOfListsState extends State<ListOfLists> {
         child: Center(
           child: FutureBuilder<List<ShoppingList>>(
               future: _futureShoppingLists,
-              builder: (BuildContext context, AsyncSnapshot<List<ShoppingList>> snapshot) {
+              builder: (BuildContext context,
+                  AsyncSnapshot<List<ShoppingList>> snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(child: CircularProgressIndicator());
                 } else if (snapshot.hasError) {
@@ -247,7 +270,8 @@ class ListOfListsState extends State<ListOfLists> {
                       int id = snapshot.data![index].id;
                       return InkWell(
                           child: Container(
-                            margin: const EdgeInsets.only(top: 4, right: 8, left: 8, bottom: 4),
+                            margin: const EdgeInsets.only(
+                                top: 4, right: 8, left: 8, bottom: 4),
                             padding: const EdgeInsets.only(left: 18),
                             decoration: BoxDecoration(
                               color: clrNeutral300,
@@ -258,17 +282,23 @@ class ListOfListsState extends State<ListOfLists> {
                               children: [
                                 Text(
                                   name.capitalize(),
-                                  style:
-                                      const TextStyle(color: clrNeutral900, fontSize: 16, fontWeight: FontWeight.bold),
+                                  style: const TextStyle(
+                                      color: clrNeutral900,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold),
                                 ),
                                 Container(
                                   decoration: const BoxDecoration(
-                                      color: clrAccent300, borderRadius: BorderRadius.all(Radius.circular(30))),
+                                      color: clrAccent300,
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(30))),
                                   child: Row(
                                     children: [
                                       Container(
                                         decoration: const BoxDecoration(
-                                            color: clrAccent500, borderRadius: BorderRadius.all(Radius.circular(30))),
+                                            color: clrAccent500,
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(30))),
                                         child: IconButton(
                                           padding: const EdgeInsets.all(16),
                                           icon: const Icon(Icons.edit),
@@ -295,7 +325,8 @@ class ListOfListsState extends State<ListOfLists> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => ProductList(shoppingList: snapshot.data![index]),
+                                builder: (context) => ProductList(
+                                    shoppingList: snapshot.data![index]),
                               ),
                             );
                           });

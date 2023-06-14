@@ -7,8 +7,12 @@ void main() async {
   // Dependency injection (injectable)
   await configureDependencies();
 
-  runApp(const MaterialApp(
-    title: 'Navigation Basics',
-    home: ListOfLists(),
-  ));
+  runApp(MaterialApp(
+      title: 'Navigation Basics',
+      home: const ListOfLists(),
+      theme: ThemeData(
+        pageTransitionsTheme: const PageTransitionsTheme(builders: {
+          TargetPlatform.android: ZoomPageTransitionsBuilder(),
+        }),
+      )));
 }

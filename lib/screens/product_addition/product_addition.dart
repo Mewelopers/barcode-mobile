@@ -17,7 +17,11 @@ class ProductAddition extends StatefulWidget {
   final Function addNewProduct;
   final ShoppingList shoppingList;
 
-  const ProductAddition({super.key, required this.shoppingList, required this.addNewProduct, required this.addProductFromList});
+  const ProductAddition(
+      {super.key,
+      required this.shoppingList,
+      required this.addNewProduct,
+      required this.addProductFromList});
 
   @override
   ProductAdditionState createState() => ProductAdditionState();
@@ -34,106 +38,97 @@ class ProductAdditionState extends State<ProductAddition> {
     setState(() {
       resultList = Expanded(
           child: ListView.builder(
-              itemCount: searchedItems.length,//searchedItems.length,
+              itemCount: searchedItems.length, //searchedItems.length,
               itemBuilder: (context, index) {
                 return SearchResultProductTile(
                     product: searchedItems[index],
                     addNewProduct: widget.addNewProduct,
-                    addProductFromList: widget.addProductFromList
-                );
-              }
-          )
-      );
+                    addProductFromList: widget.addProductFromList);
+              }));
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: NavBar(title: 'Dodawanie produktu', parrent: context.widget),
-        body: Container(
-          decoration: background,
-          child: Column(
-            children: [
-              Container(
-                height: 50,
-                margin: const EdgeInsets.only(
-                    top: 20,
-                    right: 20,
-                    left: 20,
-                    bottom: 10
-                ),
-                padding: const EdgeInsets.only(left: 18),
-                decoration: BoxDecoration(
-                  color: clrNeutral300,
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                child: Row(
-                  children: [
-                    const Icon(Icons.search),
-                    Container(
-                      margin: const EdgeInsets.only(
-                          left: 10
-                      ),
-                      child: SizedBox(
-                        height: 50,
-                        width: 300,
-                        child: TextField(
-                          onChanged: (value) {
-                            updateSearchedItems(value);
-                          },
+        appBar: const NavBar(title: 'Dodawanie produktu'),
+        body: GestureDetector(
+            onTap: () {
+              // Clear focus of text field
+              FocusScope.of(context).unfocus();
+            },
+            child: Container(
+              decoration: background,
+              child: Column(children: [
+                Container(
+                  height: 50,
+                  margin: const EdgeInsets.only(
+                      top: 20, right: 20, left: 20, bottom: 10),
+                  padding: const EdgeInsets.only(left: 18),
+                  decoration: BoxDecoration(
+                    color: clrNeutral300,
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  child: Row(
+                    children: [
+                      const Icon(Icons.search),
+                      Container(
+                        margin: const EdgeInsets.only(left: 10),
+                        child: SizedBox(
+                          height: 50,
+                          width: 300,
+                          child: TextField(
+                              onChanged: (value) {
+                                updateSearchedItems(value);
+                              },
+                              autofocus: false,
+                              enableSuggestions: false,
+                              autocorrect: false,
+                              decoration: const InputDecoration(
+                                  border: InputBorder.none,
+                                  hintText: 'Wyszukaj produkt',
+                                  hintStyle: TextStyle(fontSize: 20)),
+                              style: const TextStyle(fontSize: 20)),
                         ),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              resultList,
-              Container(
-                height: 50,
-                margin: const EdgeInsets.only(
-                    top: 10,
-                    right: 70,
-                    left: 70,
-                    bottom: 10
-                ),
-                padding: const EdgeInsets.only(left: 18),
-                decoration: BoxDecoration(
-                  color: clrNeutral300,
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                child: Row(
-                  children: [
-                    const Text(
-                      'Dodaj własny produkt',
-                      style: TextStyle(
-                        fontSize: 20
-                      ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(
-                        left: 10
-                      ),
-                      child: FloatingActionButton.small(
-                          backgroundColor: Colors.black,
-                          child: const Icon(Icons.add,
-                              color: Color.fromARGB(255, 213, 206, 239)),
-                          onPressed: () {
-                            widget.addNewProduct(null);
-                          }
                       )
-                    )
-                  ],
+                    ],
+                  ),
                 ),
-              )
-            ]
-          ),
-        ),
+                resultList,
+                Container(
+                  height: 50,
+                  margin: const EdgeInsets.only(top: 10, bottom: 10),
+                  padding: const EdgeInsets.only(left: 18),
+                  decoration: BoxDecoration(
+                    color: clrNeutral300,
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Text(
+                        'Dodaj własny produkt',
+                        style: TextStyle(fontSize: 20),
+                      ),
+                      Container(
+                          margin: const EdgeInsets.only(left: 10),
+                          child: FloatingActionButton.small(
+                              heroTag: "AddCustomProduct",
+                              backgroundColor: Colors.black,
+                              child: const Icon(Icons.add,
+                                  color: Color.fromARGB(255, 213, 206, 239)),
+                              onPressed: () {
+                                widget.addNewProduct(null);
+                              }))
+                    ],
+                  ),
+                )
+              ]),
+            )),
         bottomNavigationBar: BottomNavBar(
             addNewProduct: widget.addNewProduct,
             addProductFromList: widget.addProductFromList,
             index: 0,
-            shoppingList: widget.shoppingList)
-    );
+            shoppingList: widget.shoppingList));
   }
 }
