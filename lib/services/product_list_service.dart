@@ -14,7 +14,13 @@ class ProductListService {
   }
 
   Future<ShoppingListItem> createProductListItem(int listId, String name, String? barcode) async {
-    var response = await _dio.post("/lists/$listId/items", data: {"name": name, "barcode": barcode});
+    Response<dynamic> response;
+    if (barcode == null) {
+      response = await _dio.post("/lists/$listId/items", data: {"name": name});
+    }
+    else {
+      response = await _dio.post("/lists/$listId/items", data: {"name": name, "barcode": barcode});
+    }
 
     final newShoppingList = ShoppingListItem.fromJson(response.data);
 
@@ -22,7 +28,13 @@ class ProductListService {
   }
 
   Future<ShoppingListItem> editList(int id, String name, String? barcode) async {
-    var response = await _dio.put("/list-items/$id", data: {"name": name, "barcode": barcode});
+    Response<dynamic> response;
+    if (barcode == null) {
+      response = await _dio.put("/list-items/$id", data: {"name": name});
+    }
+    else {
+      response = await _dio.put("/list-items/$id", data: {"name": name, "barcode": barcode});
+    }
 
     final newShoppingList = ShoppingListItem.fromJson(response.data);
 

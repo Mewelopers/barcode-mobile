@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 
 import '../../common/background.dart';
@@ -24,10 +26,11 @@ class ProductAddition extends StatefulWidget {
 class ProductAdditionState extends State<ProductAddition> {
   List<Product> searchedItems = [];
   final ProductService productDbSearch = getIt<ProductService>();
-  Widget resultList = Container();
+  Widget resultList = Expanded(child: Container());
 
   Future<void> updateSearchedItems(String nameToSearch) async {
     searchedItems = await productDbSearch.getMatchingItems(nameToSearch);
+    if (nameToSearch.isEmpty) searchedItems = [];
     setState(() {
       resultList = Expanded(
           child: ListView.builder(
@@ -58,7 +61,7 @@ class ProductAdditionState extends State<ProductAddition> {
                     top: 20,
                     right: 20,
                     left: 20,
-                    // bottom: 4
+                    bottom: 10
                 ),
                 padding: const EdgeInsets.only(left: 18),
                 decoration: BoxDecoration(
@@ -85,7 +88,44 @@ class ProductAdditionState extends State<ProductAddition> {
                   ],
                 ),
               ),
-              resultList
+              resultList,
+              Container(
+                height: 50,
+                margin: const EdgeInsets.only(
+                    top: 10,
+                    right: 70,
+                    left: 70,
+                    bottom: 10
+                ),
+                padding: const EdgeInsets.only(left: 18),
+                decoration: BoxDecoration(
+                  color: clrNeutral300,
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                child: Row(
+                  children: [
+                    const Text(
+                      'Dodaj własny produkt',
+                      style: TextStyle(
+                        fontSize: 20
+                      ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(
+                        left: 10
+                      ),
+                      child: FloatingActionButton.small(
+                          backgroundColor: Colors.black,
+                          child: const Icon(Icons.add,
+                              color: Color.fromARGB(255, 213, 206, 239)),
+                          onPressed: () {
+                            widget.addNewProduct(null);
+                          }
+                      )
+                    )
+                  ],
+                ),
+              )
             ]
           ),
         ),
