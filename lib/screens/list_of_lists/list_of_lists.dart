@@ -226,7 +226,7 @@ class ListOfListsState extends State<ListOfLists> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const NavBar(title: 'Twoje listy', showBackButton: false),
+      appBar: NavBar(title: 'Twoje listy', showBackButton: false, parrent: context.widget),
       body: Container(
         padding: const EdgeInsets.only(top: 16),
         decoration: background,

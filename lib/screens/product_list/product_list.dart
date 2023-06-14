@@ -117,7 +117,7 @@ class ProductListState extends State<ProductList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: NavBar(title: _shoppingList.listTitle.capitalize()),
+      appBar: NavBar(title: _shoppingList.listTitle.capitalize(), parrent: context.widget),
       body: RefreshIndicator(
         onRefresh: () async {
           await getItems();
@@ -128,10 +128,10 @@ class ProductListState extends State<ProductList> {
           child: _isLoading
               ? const Center(child: CircularProgressIndicator())
               : _items.isEmpty
-                  ? Center(
+                  ? const Center(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
+                        children: [
                           Icon(Icons.access_time_sharp, size: 64),
                           Text('No items found'),
                         ],
@@ -146,7 +146,11 @@ class ProductListState extends State<ProductList> {
                     ),
         ),
       ),
-      bottomNavigationBar: BottomNavBar(addListItem: showAddListItemPopup),
+      bottomNavigationBar: BottomNavBar(
+          addNewProduct: showAddListItemPopup,
+          addProductFromList: addListItem,
+          index: 1,
+          shoppingList: _shoppingList),
     );
   }
 }
