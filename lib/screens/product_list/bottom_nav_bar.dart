@@ -3,11 +3,22 @@ import 'package:simple_barcode_scanner/simple_barcode_scanner.dart';
 
 import '../../common/jkp_colors.dart';
 import '../product_addition/product_addition.dart';
+import 'product_list.dart';
+import '../../models/shopping_list.dart';
 
 class BottomNavBar extends StatefulWidget {
-  final Function _addListItem;
+  final Function addProductFromList;
+  final Function addNewProduct;
+  final int index;
+  final ShoppingList shoppingList;
 
-  const BottomNavBar({super.key, required Function addListItem}) : _addListItem = addListItem;
+  const BottomNavBar({
+    super.key,
+    required this.addProductFromList,
+    required this.addNewProduct,
+    required this.index,
+    required this.shoppingList
+  });
 
   @override
   NavBarState createState() => NavBarState();
@@ -17,7 +28,7 @@ class NavBarState extends State<BottomNavBar> {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-      currentIndex: 1,
+      currentIndex: widget.index,
       type: BottomNavigationBarType.fixed,
       backgroundColor: clrNeutral500,
       unselectedItemColor: clrAccent200,
@@ -37,28 +48,42 @@ class NavBarState extends State<BottomNavBar> {
         ),
       ],
       onTap: (int option) async {
-        switch (option) {
-          case 0:
-            {
+        if (option != widget.index) {
+          switch (option) {
+            case 0: {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const ProductAddition(),
-                  ));
+                      builder: (context) => ProductAddition(
+                          shoppingList: widget.shoppingList,
+                          addNewProduct: widget.addNewProduct,
+                          addProductFromList: widget.addProductFromList
+                      )
+                  )
+              );
               break;
             }
-          case 2:
-            {
+            case 1: {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ProductList(shoppingList: widget.shoppingList)
+                  )
+              );
+              break;
+            }
+            case 2: {
               var res = await Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => const SimpleBarcodeScannerPage(),
                   ));
 
-              widget._addListItem(res);
+              widget.addNewProduct(res);
 
               break;
             }
+          }
         }
       },
     );

@@ -138,9 +138,12 @@ class ProductTile extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                _listItem.name.capitalize(),
-                style: const TextStyle(color: clrNeutral900, fontSize: 16, fontWeight: FontWeight.bold),
+              SizedBox(
+                width: 230,
+                child: Text(
+                  _listItem.name.capitalize(),
+                  style: const TextStyle(color: clrNeutral900, fontSize: 16, fontWeight: FontWeight.bold),
+                )
               ),
               Wrap(
                 crossAxisAlignment: WrapCrossAlignment.center,

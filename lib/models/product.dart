@@ -4,23 +4,16 @@ part 'product.g.dart';
 
 @JsonSerializable()
 class Product {
-  // final int id;
-  // final String barcode;
-  // final String thumbnailUuid;
-  // final String name;
-  // final String description;
-  // final String manufacturer;
-  // final String thumbnailUrl;
-  // final String barcodeImageUrl;
-  //
-  // const ShoppingList(
-  //     {required this.id,
-  //       required this.barcode,
-  //       required this.thumbnailUuid,
-  //       required this.name,
-  //       required this.description});
+  final String barcode;
+  final String name;
+  final String thumbnailUrl;
 
+  const Product({
+    required this.name,
+    required this.barcode,
+    required this.thumbnailUrl
+  });
 
-  // factory Product.fromJson(Map<String, dynamic> json) => _$ProductFromJson(json);
-  // Map<String, dynamic> toJson() => _$ProductToJson(this);
+  factory Product.fromJson(Map<String, dynamic> json) => _$ProductFromJson(json);
+  Map<String, dynamic> toJson() => _$ProductToJson(this);
 }

@@ -15,7 +15,7 @@ class ProductView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: NavBar(title: _listItem.name.capitalize()),
+      appBar: NavBar(title: _listItem.name.capitalize(), parrent: context.widget),
       body: Container(
         width: double.infinity,
         decoration: background,

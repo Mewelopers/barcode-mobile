@@ -1,3 +1,6 @@
+import 'package:barcode_mobile/screens/list_of_lists/list_of_lists.dart';
+import 'package:barcode_mobile/screens/product_addition/product_addition.dart';
+import 'package:barcode_mobile/screens/product_list/product_list.dart';
 import 'package:flutter/material.dart';
 
 import 'jkp_colors.dart';
@@ -5,8 +8,9 @@ import 'jkp_colors.dart';
 class NavBar extends StatelessWidget implements PreferredSizeWidget {
   final String _title;
   final bool _showBackButton;
+  final Widget parrent;
 
-  const NavBar({super.key, required String title, bool showBackButton = true})
+  const NavBar({super.key, required String title, bool showBackButton = true, required this.parrent})
       : _showBackButton = showBackButton,
         _title = title;
 
@@ -22,7 +26,20 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget {
             size: 40,
             color: clrNeutral300,
           ),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () {
+            if (parrent.runtimeType.toString() == (ProductAddition).toString() ||
+                parrent.runtimeType.toString() == (ProductList).toString()) {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const ListOfLists()
+                  )
+              );
+            }
+            else {
+              Navigator.pop(context);
+            }
+          },
         ),
       );
     } else {
