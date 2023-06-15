@@ -87,7 +87,7 @@ class NavBarState extends State<BottomNavBar> {
                       transitionDuration: Duration.zero,
                       reverseTransitionDuration: Duration.zero,
                     ));
-                if (res && res != "-1") widget.addNewProduct(res);
+                if (res != "-1") widget.addNewProduct(res);
 
                 break;
               }
