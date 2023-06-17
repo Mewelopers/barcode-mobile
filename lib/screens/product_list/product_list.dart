@@ -14,8 +14,7 @@ import 'bottom_nav_bar.dart';
 class ProductList extends StatefulWidget {
   final ShoppingList _shoppingList;
 
-  const ProductList({super.key, required ShoppingList shoppingList})
-      : _shoppingList = shoppingList;
+  const ProductList({super.key, required ShoppingList shoppingList}) : _shoppingList = shoppingList;
 
   @override
   ProductListState createState() => ProductListState();
@@ -35,8 +34,7 @@ class ProductListState extends State<ProductList> {
   }
 
   Future<void> getItems() async {
-    final listItems =
-        await _productListService.getProductListItems(_shoppingList.id);
+    final listItems = await _productListService.getProductListItems(_shoppingList.id);
     _items = [];
 
     setState(() {
@@ -64,13 +62,12 @@ class ProductListState extends State<ProductList> {
 
   Future<void> addListItem(String name, String? barcode) async {
     setState(() => _isLoading = true);
-    await _productListService.createProductListItem(
-        _shoppingList.id, name, barcode);
+    await _productListService.createProductListItem(_shoppingList.id, name, barcode);
     await getItems();
     setState(() => _isLoading = false);
   }
 
-  void showAddListItemPopup(String? barcode) {
+  void showAddListItemPopup(String? barcode, {int navBackCount = 1}) {
     String name = "";
     showDialog(
       context: context,
@@ -78,41 +75,36 @@ class ProductListState extends State<ProductList> {
         return AlertDialog(
           title: const Text('Nazwa produktu'),
           backgroundColor: clrAccent200,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
           content: TextField(
               onChanged: (value) {
                 name = value;
               },
               textAlign: TextAlign.center),
           contentPadding: const EdgeInsets.only(top: 16, left: 16, right: 16),
-          actionsPadding:
-              const EdgeInsets.only(top: 8, bottom: 8, left: 24, right: 24),
+          actionsPadding: const EdgeInsets.only(top: 8, bottom: 8, left: 24, right: 24),
           actions: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30)),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
                       backgroundColor: clrNeutral300),
-                  child: const Text('Anuluj',
-                      style: TextStyle(color: clrNeutral900)),
+                  child: const Text('Anuluj', style: TextStyle(color: clrNeutral900)),
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
                 ),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30)),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
                       backgroundColor: clrNeutral300),
-                  child: const Text('Zapisz',
-                      style: TextStyle(color: clrNeutral900)),
+                  child: const Text('Zapisz', style: TextStyle(color: clrNeutral900)),
                   onPressed: () {
                     addListItem(name, barcode);
-                    Navigator.of(context).pop();
+                    int count = 0;
+                    Navigator.of(context).popUntil((_) => count++ >= navBackCount);
                   },
                 ),
               ],
@@ -140,7 +132,7 @@ class ProductListState extends State<ProductList> {
                   ? Center(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
+                        children: const [
                           Icon(Icons.access_time_sharp, size: 64),
                           Text('No items found'),
                         ],
@@ -150,18 +142,12 @@ class ProductListState extends State<ProductList> {
                       itemCount: _items.length,
                       itemBuilder: (context, index) {
                         return ProductTile(
-                            listItem: _items[index],
-                            editListItem: editListItem,
-                            deleteListItem: deleteListItem);
+                            listItem: _items[index], editListItem: editListItem, deleteListItem: deleteListItem);
                       },
                     ),
         ),
       ),
-      bottomNavigationBar: BottomNavBar(
-          addNewProduct: showAddListItemPopup,
-          addProductFromList: addListItem,
-          index: 1,
-          shoppingList: _shoppingList),
+      bottomNavigationBar: BottomNavBar(addNewProduct: showAddListItemPopup, index: 1, shoppingList: _shoppingList),
     );
   }
 }

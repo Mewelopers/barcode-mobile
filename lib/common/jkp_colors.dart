@@ -1,7 +1,6 @@
-
-
 import 'package:flutter/material.dart';
 
+const Color clrNeutral100 = Colors.white;
 const Color clrNeutral200 = Color.fromARGB(150, 120, 205, 240);
 const Color clrNeutral300 = Color.fromARGB(255, 135, 223, 154);
 const Color clrNeutral500 = Color.fromARGB(255, 76, 79, 146);

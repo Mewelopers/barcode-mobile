@@ -7,17 +7,11 @@ import 'product_list.dart';
 import '../../models/shopping_list.dart';
 
 class BottomNavBar extends StatefulWidget {
-  final Function addProductFromList;
   final Function addNewProduct;
   final int index;
   final ShoppingList shoppingList;
 
-  const BottomNavBar(
-      {super.key,
-      required this.addProductFromList,
-      required this.addNewProduct,
-      required this.index,
-      required this.shoppingList});
+  const BottomNavBar({super.key, required this.addNewProduct, required this.index, required this.shoppingList});
 
   @override
   NavBarState createState() => NavBarState();
@@ -55,10 +49,7 @@ class NavBarState extends State<BottomNavBar> {
                     context,
                     PageRouteBuilder(
                       pageBuilder: (context, animation1, animation2) =>
-                          ProductAddition(
-                              shoppingList: widget.shoppingList,
-                              addNewProduct: widget.addNewProduct,
-                              addProductFromList: widget.addProductFromList),
+                          ProductAddition(shoppingList: widget.shoppingList, addNewProduct: widget.addNewProduct),
                       transitionDuration: Duration.zero,
                       reverseTransitionDuration: Duration.zero,
                     ));
@@ -67,14 +58,7 @@ class NavBarState extends State<BottomNavBar> {
               }
             case 1:
               {
-                Navigator.push(
-                    context,
-                    PageRouteBuilder(
-                      pageBuilder: (context, animation1, animation2) =>
-                          ProductList(shoppingList: widget.shoppingList),
-                      transitionDuration: Duration.zero,
-                      reverseTransitionDuration: Duration.zero,
-                    ));
+                Navigator.pop(context);
                 break;
               }
             case 2:
@@ -82,8 +66,7 @@ class NavBarState extends State<BottomNavBar> {
                 var res = await Navigator.push(
                     context,
                     PageRouteBuilder(
-                      pageBuilder: (context, animation1, animation2) =>
-                          const SimpleBarcodeScannerPage(),
+                      pageBuilder: (context, animation1, animation2) => const SimpleBarcodeScannerPage(),
                       transitionDuration: Duration.zero,
                       reverseTransitionDuration: Duration.zero,
                     ));

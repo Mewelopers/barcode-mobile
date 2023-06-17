@@ -7,13 +7,23 @@ part of 'product.dart';
 // **************************************************************************
 
 Product _$ProductFromJson(Map<String, dynamic> json) => Product(
-  name: json['name'] as String,
-  thumbnailUrl: json['thumbnailUrl'] as String,
-  barcode: json['barcode'] as String
-);
+      thumbnailUuid: json['thumbnailUuid'] as String?,
+      barcodeImageUuid: json['barcodeImageUuid'] as String?,
+      description: json['description'] as String?,
+      manufacturer: json['manufacturer'] as String?,
+      barcodeImageUrl: json['barcodeImageUrl'] as String?,
+      barcode: json['barcode'] as String,
+      name: json['name'] as String,
+      thumbnailUrl: json['thumbnailUrl'] as String?,
+    );
 
 Map<String, dynamic> _$ProductToJson(Product instance) => <String, dynamic>{
-  'name': instance.name,
-  'thumbnailUrl': instance.thumbnailUrl,
-  'barcode': instance.barcode
-};
+      'barcode': instance.barcode,
+      'name': instance.name,
+      'description': instance.description,
+      'manufacturer': instance.manufacturer,
+      'thumbnailUuid': instance.thumbnailUuid,
+      'thumbnailUrl': instance.thumbnailUrl,
+      'barcodeImageUuid': instance.barcodeImageUuid,
+      'barcodeImageUrl': instance.barcodeImageUrl,
+    };

@@ -13,15 +13,10 @@ import 'package:barcode_mobile/di/injectable.dart';
 import 'searchResultProductTile.dart';
 
 class ProductAddition extends StatefulWidget {
-  final Function addProductFromList;
   final Function addNewProduct;
   final ShoppingList shoppingList;
 
-  const ProductAddition(
-      {super.key,
-      required this.shoppingList,
-      required this.addNewProduct,
-      required this.addProductFromList});
+  const ProductAddition({super.key, required this.shoppingList, required this.addNewProduct});
 
   @override
   ProductAdditionState createState() => ProductAdditionState();
@@ -33,102 +28,97 @@ class ProductAdditionState extends State<ProductAddition> {
   Widget resultList = Expanded(child: Container());
 
   Future<void> updateSearchedItems(String nameToSearch) async {
-    searchedItems = await productDbSearch.getMatchingItems(nameToSearch);
+    searchedItems = await productDbSearch.getMatchingProducts(nameToSearch);
     if (nameToSearch.isEmpty) searchedItems = [];
     setState(() {
       resultList = Expanded(
-          child: ListView.builder(
-              itemCount: searchedItems.length, //searchedItems.length,
-              itemBuilder: (context, index) {
-                return SearchResultProductTile(
-                    product: searchedItems[index],
-                    addNewProduct: widget.addNewProduct,
-                    addProductFromList: widget.addProductFromList);
-              }));
+        child: ListView.builder(
+          itemCount: searchedItems.length, //searchedItems.length,
+          itemBuilder: (context, index) {
+            return SearchResultProductTile(product: searchedItems[index], addNewProduct: widget.addNewProduct);
+          },
+        ),
+      );
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: const NavBar(title: 'Dodawanie produktu'),
-        body: GestureDetector(
-            onTap: () {
-              // Clear focus of text field
-              FocusScope.of(context).unfocus();
-            },
-            child: Container(
-              decoration: background,
-              child: Column(children: [
-                Container(
-                  height: 50,
-                  margin: const EdgeInsets.only(
-                      top: 20, right: 20, left: 20, bottom: 10),
-                  padding: const EdgeInsets.only(left: 18),
-                  decoration: BoxDecoration(
-                    color: clrNeutral300,
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  child: Row(
-                    children: [
-                      const Icon(Icons.search),
-                      Container(
-                        margin: const EdgeInsets.only(left: 10),
-                        child: SizedBox(
-                          height: 50,
-                          width: 300,
-                          child: TextField(
-                              onChanged: (value) {
-                                updateSearchedItems(value);
-                              },
-                              autofocus: false,
-                              enableSuggestions: false,
-                              autocorrect: false,
-                              decoration: const InputDecoration(
-                                  border: InputBorder.none,
-                                  hintText: 'Wyszukaj produkt',
-                                  hintStyle: TextStyle(fontSize: 20)),
-                              style: const TextStyle(fontSize: 20)),
-                        ),
-                      )
-                    ],
-                  ),
+      appBar: const NavBar(title: 'Dodawanie produktu'),
+      body: GestureDetector(
+          onTap: () {
+            // Clear focus of text field
+            FocusScope.of(context).unfocus();
+          },
+          child: Container(
+            decoration: background,
+            child: Column(children: [
+              Container(
+                height: 50,
+                margin: const EdgeInsets.only(top: 20, right: 20, left: 20, bottom: 10),
+                padding: const EdgeInsets.only(left: 18),
+                decoration: BoxDecoration(
+                  color: clrNeutral300,
+                  borderRadius: BorderRadius.circular(30),
                 ),
-                resultList,
-                Container(
-                  height: 50,
-                  margin: const EdgeInsets.only(top: 10, bottom: 10),
-                  padding: const EdgeInsets.only(left: 18),
-                  decoration: BoxDecoration(
-                    color: clrNeutral300,
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Text(
-                        'Dodaj własny produkt',
-                        style: TextStyle(fontSize: 20),
+                child: Row(
+                  children: [
+                    const Icon(Icons.search),
+                    Container(
+                      margin: const EdgeInsets.only(left: 10),
+                      child: SizedBox(
+                        height: 50,
+                        width: 250,
+                        child: TextField(
+                            onChanged: (value) {
+                              updateSearchedItems(value);
+                            },
+                            autofocus: false,
+                            enableSuggestions: false,
+                            autocorrect: false,
+                            decoration: const InputDecoration(
+                                border: InputBorder.none,
+                                hintText: 'Wyszukaj produkt',
+                                hintStyle: TextStyle(fontSize: 20)),
+                            style: const TextStyle(fontSize: 20)),
                       ),
-                      Container(
-                          margin: const EdgeInsets.only(left: 10),
-                          child: FloatingActionButton.small(
-                              heroTag: "AddCustomProduct",
-                              backgroundColor: Colors.black,
-                              child: const Icon(Icons.add,
-                                  color: Color.fromARGB(255, 213, 206, 239)),
-                              onPressed: () {
-                                widget.addNewProduct(null);
-                              }))
-                    ],
-                  ),
-                )
-              ]),
-            )),
-        bottomNavigationBar: BottomNavBar(
-            addNewProduct: widget.addNewProduct,
-            addProductFromList: widget.addProductFromList,
-            index: 0,
-            shoppingList: widget.shoppingList));
+                    )
+                  ],
+                ),
+              ),
+              resultList,
+              Container(
+                height: 50,
+                margin: const EdgeInsets.only(top: 10, bottom: 10),
+                padding: const EdgeInsets.only(left: 18),
+                decoration: BoxDecoration(
+                  color: clrNeutral300,
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Text(
+                      'Dodaj własny produkt',
+                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                    Container(
+                        margin: const EdgeInsets.only(left: 10),
+                        child: FloatingActionButton.small(
+                            heroTag: "AddCustomProduct",
+                            backgroundColor: Colors.black,
+                            child: const Icon(Icons.add, color: Color.fromARGB(255, 213, 206, 239)),
+                            onPressed: () {
+                              widget.addNewProduct(null, navBackCount: 2);
+                            }))
+                  ],
+                ),
+              )
+            ]),
+          )),
+      bottomNavigationBar:
+          BottomNavBar(addNewProduct: widget.addNewProduct, index: 0, shoppingList: widget.shoppingList),
+    );
   }
 }
