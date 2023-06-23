@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:flutter_appauth/flutter_appauth.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:injectable/injectable.dart';
@@ -24,12 +25,16 @@ class AuthService {
     _refreshToken = await _secureStorage.read(key: refreshTokenKey);
 
     if (_refreshToken != null) {
-      await _refresh();
+      try {
+        await _refresh();
+      } catch (_) {}
     }
   }
 
   bool get signedIn =>
-      _accessToken != null && _accessTokenExpirationDate != null && _accessTokenExpirationDate!.isAfter(DateTime.now());
+      _accessToken != null &&
+      _accessTokenExpirationDate != null &&
+      _accessTokenExpirationDate!.isAfter(DateTime.now());
 
   Future<String> get accessToken async {
     if (_accessToken == null) {
@@ -44,8 +49,9 @@ class AuthService {
   }
 
   Future<void> _signIn() async {
-    final tokenRequest =
-        AuthorizationTokenRequest(oidcClientId, oidcRedirectUrl, scopes: oidcScopes, discoveryUrl: oidcDiscoveryUrl);
+    final tokenRequest = AuthorizationTokenRequest(
+        oidcClientId, oidcRedirectUrl,
+        scopes: oidcScopes, discoveryUrl: oidcDiscoveryUrl);
 
     final result = await _appAuth.authorizeAndExchangeCode(tokenRequest);
 
@@ -58,7 +64,9 @@ class AuthService {
 
   Future<void> _refresh() async {
     final tokenRequest = TokenRequest(oidcClientId, oidcRedirectUrl,
-        scopes: oidcScopes, discoveryUrl: oidcDiscoveryUrl, refreshToken: _refreshToken);
+        scopes: oidcScopes,
+        discoveryUrl: oidcDiscoveryUrl,
+        refreshToken: _refreshToken);
 
     final result = await _appAuth.token(tokenRequest);
 
@@ -71,7 +79,9 @@ class AuthService {
 
   Future<void> signOut() async {
     await _appAuth.endSession(EndSessionRequest(
-        idTokenHint: _idToken, postLogoutRedirectUrl: oidcPostLogoutRedirectUrl, discoveryUrl: oidcDiscoveryUrl));
+        idTokenHint: _idToken,
+        postLogoutRedirectUrl: oidcPostLogoutRedirectUrl,
+        discoveryUrl: oidcDiscoveryUrl));
 
     _idToken = _accessToken = _refreshToken = _accessTokenExpirationDate = null;
   }
